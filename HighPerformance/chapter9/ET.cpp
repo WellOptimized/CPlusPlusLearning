@@ -44,7 +44,10 @@ void et(struct epoll_event* events,int number,int epollfd,int listenfd){
             socklen_t client_addrlength = sizeof(client_address);
             int connfd = accept(listenfd, (struct sockaddr *)&client_address, &client_addrlength);
             addfd(epollfd, connfd, true);
-        }else if(events[i].events & EPOLLIN){
+            printf("listenfd\n");
+        }
+        else if (events[i].events & EPOLLIN)
+        {
             printf("event trigger once\n");
             while(1){
                 memset(buf, '\0', BUFFER_SIZE);
@@ -62,7 +65,9 @@ void et(struct epoll_event* events,int number,int epollfd,int listenfd){
                     printf("get %d bytes of content: %s \n", ret, buf);
                 }
             }
-        }else{
+        }
+        else
+        {
             printf("something else happened\n");
         }
     }
@@ -102,7 +107,7 @@ int main(int argc,char* argv[]){
 
     while(1){
         printf("a loop\n");
-        int ret = epoll_wait(epollfd, events, MAX_EVENT_NUMBER, 0);
+        int ret = epoll_wait(epollfd, events, MAX_EVENT_NUMBER, -1);
         if(ret<0){
             printf("epoll failure\n");
             break;
