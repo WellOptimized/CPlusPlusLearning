@@ -3,7 +3,7 @@
 #include <string>
 #include <functional>
 #include <vector>
-
+using namespace std;
 template <typename ... T>
 auto average(T ... a){
     return (a + ...)/sizeof...(a);
@@ -17,16 +17,10 @@ void update(std::map<Key, Value>& m, F foo) {
 }
 
 int main() {
-    std::map<std::string, long long int> m {
-        {"a", 1},
-        {"b", 2},
-        {"c", 3}
-    };
-    update(m, [](std::string key) -> long long int {
-        return std::hash<std::string>{}(key);
-    });
-    for (auto&& [key, value] : m)
-        std::cout << key << ":" << value << std::endl;
+    {
+        int a=3;
+    }
+    cout<<a<<endl;
 }
 
 // int main() {
