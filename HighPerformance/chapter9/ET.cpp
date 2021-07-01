@@ -60,7 +60,7 @@ void et(struct epoll_event* events,int number,int epollfd,int listenfd){
                     close(sockfd);
                     break;
                 }else if(ret==0){
-                    close(sockfd);
+                    close(sockfd);   //ret==0 说明对方关闭了连接，或者收到的datagram长度是0
                 }else{
                     printf("get %d bytes of content: %s \n", ret, buf);
                 }

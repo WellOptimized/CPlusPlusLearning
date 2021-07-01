@@ -46,7 +46,7 @@ int main(int argc,char* argv[]){
     inet_pton(AF_INET, ip, &address.sin_addr);
     address.sin_port = htons(port);
 
-    int listenfd = socker(PF_INET, SOCK_STREAM, 0);
+    int listenfd = socket(PF_INET, SOCK_STREAM, 0);
     assert(listenfd >= 0);
 
     ret = bind(listenfd, (struct sockaddr *)&address, sizeof(address));

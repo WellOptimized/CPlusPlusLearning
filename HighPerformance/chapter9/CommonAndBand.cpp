@@ -47,37 +47,31 @@ int main(int argc,char* argv[]){
 
     char buf[1024];
     fd_set read_fds;
-    fd_set exception_fds;
-
+    fd_set excep_fds;
     FD_ZERO(&read_fds);
-    FD_ZERO(&exception_fds);
+    FD_ZERO(&excep_fds);
 
     while(1){
-        memset(buf, '\0', sizeof(buf));
-        FD_SET(connfd, &read_fds);
-        FD_SET(connfd, &exception_fds);
-
-        printf("blocked\n");
-        ret = select(connfd + 1, &read_fds, NULL, &exception_fds, NULL);
-
+        memset(buf,'\0',1024);
+        FD_SET(connfd,&read_fds);
+        FD_SET(connfd,&excep_fds);
+        int ret=select(connfd+1,&read_fds,NULL,&excep_fds,NULL);
         if(ret<0){
             printf("selection failure\n");
             break;
         }
-
         if(FD_ISSET(connfd,&read_fds)){
-            ret = recv(connfd, buf, sizeof(buf) - 1, 0);
+            ret=recv(connfd,buf,1024-1,0);
             if(ret<=0){
                 break;
             }
-            printf("get %d bytes of normal data:%s\n", ret, buf);
-        }
-        else if(FD_ISSET(connfd,&exception_fds)){
-            ret = recv(connfd, buf, sizeof(buf) - 1, MSG_OOB);
+            printf("get %d bytes of normal data : %s\n",ret,buf);
+        }else if(FD_ISSET(connfd,&excep_fds)){
+            ret=recv(connfd,buf,1024-1,MSG_OOB);
             if(ret<=0){
                 break;
             }
-            printf("get %d bytes of oob data: %s \n", ret, buf);
+            printf("get %d bytes of OOB data : %s\n",ret,buf);
         }
     }
     close(connfd);

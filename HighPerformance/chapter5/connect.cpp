@@ -30,15 +30,33 @@ int main(int argc,char* argv[]){
     if(connect(sock,(struct sockaddr*)&address,sizeof(address))<0){
         printf("connection failed\n");
     }else{
-        // const char* oob_data="abc";
-        // const char* normal_data="123";
-        // send(sock,normal_data,strlen(normal_data),0);
+        const char* oob_data="abc";
+        const char* normal_data="12357238975982375982374892739479283749832";
+        send(sock,normal_data,strlen(normal_data),0);
+
+        char buf[512];
+        bzero(buf,512);
+        
+        recv(sock,buf,512,0);
+        printf("%s\n",buf);
         // send(sock,oob_data,strlen(oob_data),MSG_OOB);
         // send(sock,normal_data,strlen(normal_data),0);
-        char buf[1024];
-        recv(sock,buf,1024,0);
-        printf("%s\n",buf);
-        send(sock,buf,1024,0);
+        
+        // char buf[1024];
+        // recv(sock,buf,1024,0);
+        // printf("%s\n",buf);
+        // send(sock,buf,1024,0);
+
+        // char buf[1024];
+        // buf[0]='0';
+        // buf[1]='1';
+        // buf[2]='2';
+        // buf[3]='\0';
+        // buf[1023]='\0';
+        // send(sock,buf,3,0);
+        // recv(sock,buf,3,0);
+        // printf("%s\n",buf);
+        // printf("???\n");
     }
     close(sock);
     return 0;

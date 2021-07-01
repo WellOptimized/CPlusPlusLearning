@@ -132,7 +132,7 @@ int main(int argc,char* argv[]){
     struct epoll_event events[MAX_EVENT_NUMBER];
     int epollfd = epoll_create(5);
     assert(epollfd != -1);
-    addfd(epollfd, listenfd, false);
+    addfd(epollfd, listenfd, false);   //想想为啥这里是false
 
     while(1){
         printf("a loop\n");
