@@ -83,8 +83,8 @@ public:
     }
     template<typename F,typename...Args>
     auto Submit(F&& f,Args&&... args) -> std::future<decltype(f(args...))>{
-        std::function<decltype(f(args...))()> functors=std::bind(std::forward<F>(f),std::forward<Args>(args)...);
-        auto taskPtr=std::make_shared<std::packaged_task<decltype(f(args...))()>>(functors);
+        std::function<decltype(std::forward<F>(f)(std::forward<Args>(args)...))()> functors=std::bind(std::forward<F>(f),std::forward<Args>(args)...);
+        auto taskPtr=std::make_shared<std::packaged_task<decltype(std::forward<F>(f)(std::forward<Args>(args)...))()>>(functors);
         std::function<void()> warpper_func=[taskPtr](){
             (*taskPtr)();
         };
