@@ -64,7 +64,7 @@ public:
 
     void Init(){
         for(int i=0;i<workers_.size();i++){
-            auto tmp=std::thread([this](){
+            workers_[i]=std::thread([this](){
                 for(;;){
                     std::function<void()> task;
                     {
@@ -85,7 +85,6 @@ public:
                     task();
                 }
             });
-            workers_[i]=std::move(tmp);
             workers_[i].detach();
         }
     }
